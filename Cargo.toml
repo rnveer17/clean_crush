@@ -1,0 +1,65 @@
+[package]
+name = "clean_crush"
+version = "0.1.0"
+edition = "2021"
+description = "Student-focused exam file cleanup tool with smart archiving"
+repository = "https://github.com/rnveer17/clean_crush"
+readme = "README.md"
+license = "MIT"
+authors = ["Ranveer Kaur Maan <ranveermaan1702@gmail.com>"]
+
+[[bin]]
+name = "clean_crush"
+path = "src/main.rs"
+
+[dependencies]
+# CLI parsing
+clap = { version = "4.5", features = ["derive", "env"] }
+
+# File system operations
+walkdir = "2.5"
+dirs = "5.0"
+fs_extra = "1.3"
+
+# Hashing for duplicates (memory-safe streaming)
+blake3 = "1.5"
+
+# Date/time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# JSON config
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Safe delete (OS-appropriate Recycle Bin/Trash)
+trash = "3.0"
+
+# Progress bars
+indicatif = "0.17"
+
+# Colored output
+colored = "2.1"
+
+# Regex for course detection
+regex = "1.10"
+
+# Interactive prompts (first-run wizard)
+dialoguer = "0.11"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Random selection (for cute messages)
+rand = "0.8"
+
+# Cross-platform path handling
+path-slash = "0.2"
+
+[dev-dependencies]
+tempfile = "3.10"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = "z"
