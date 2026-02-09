@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanCrush - Student-Focused Exam File Cleanup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Variables */
+        :root {
+            --bg-dark: #001317;
+            --bg-light: #f8f9fa;
+            --accent: #FFB655;
+            --accent-dark: #e6a44c;
+            --text-light: #ffffff;
+            --text-muted: #a0a0a0;
+            --text-dark: #001317;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: var(--accent);
+            color: var(--bg-dark);
+            padding: 12px 20px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .skip-link:focus {
+            left: 20px;
+        }
+
+        /* Header Navigation */
+        .site-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 19, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-dark);
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            position: relative;
+            padding: 8px 0;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-light);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: var(--bg-dark);
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid var(--accent);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 19, 23, 0.9) 0%, rgba(0, 19, 23, 0.7) 100%);
+            z-index: -1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            background: rgba(255, 182, 85, 0.1);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-light);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-eyebrow {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 40px 30px;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .feature-card-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .feature-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-light);
+        }
+
+        .feature-card-desc {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Output Example Section */
+        .output-section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 40px;
+            margin-top: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .terminal {
+            background: #0a0e0f;
+            border-radius: 8px;
+            padding: 30px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 182, 85, 0.2);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ff5f57; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #28ca43; }
+
+        .terminal-content {
+            color: var(--accent);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+        }
+
+        /* About Section */
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #000a0c;
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Button Styles */
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid var(--accent);
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: var(--bg-dark);
+                flex-direction: column;
+                padding: 30px;
+                gap: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-features {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <nav class="nav-container">
+                <div class="brand">
+                    <div class="logo">🧹</div>
+                    CleanCrush
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="nav-links" id="navLinks">
+                    <a href="#features">Features</a>
+                    <a href="#output">Example</a>
+                    <a href="#about">About</a>
+                    <a href="https://github.com/rnveer17/clean_crush" class="cta-button">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="main-content" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="eyebrow">Student-Focused Tool</div>
+                <h1>Stop drowning in post-exam digital clutter.</h1>
+                <p class="hero-subtitle">CleanCrush intelligently tracks your study files during exams and provides safe, privacy-first cleanup options. Built by students, for students.</p>
+                
+                <div class="btn-group">
+                    <a href="#features" class="btn btn-primary">
+                        <i class="fas fa-star"></i> Explore Features
+                    </a>
+                    <a href="#output" class="btn btn-secondary">
+                        <i class="fas fa-terminal"></i> See Example
+                    </a>
+                </div>
+
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div>
+                            <strong>Privacy First</strong><br>
+                            Never reads your file contents
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <strong>Exam-Aware</strong><br>
+                            Auto-detects study periods
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div>
+                            <strong>Gamified</strong><br>
+                            Streaks, achievements, scores
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <strong>Safe Cleanup</strong><br>
+                            Recycle Bin first, 30-day restore
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-eyebrow">Built for students, by students</div>
+                <h2 class="section-title">Why Students Love CleanCrush</h2>
+                <p class="section-subtitle">Designed specifically for academic workflows with student privacy as the top priority</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3 class="feature-card-title">Privacy First</h3>
+                    <p class="feature-card-desc">Unlike other cleaners, CleanCrush never reads your file contents. We respect your academic work.</p>
+                    <ul style="color: var(--text-muted); padding-left: 20px; margin-top: 15px;">
+                        <li>Metadata-only scanning</li>
+                        <li>Local processing only</li>
+                        <li>Protected folder system</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="feature-card-title">Exam-Aware</h3>
+                    <p class="feature-card-desc">Understands academic cycles and helps you stay organized during and after exams.</p>
+                    <ul style="color: var(--text-muted); padding-left: 20px; margin-top: 15px;">
+                        <li>Auto-detects exam periods</li>
+                        <li>Tracks study files automatically</li>
+                        <li>Smart post-exam cleanup</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="feature-card-title">Gamified Cleanup</h3>
+                    <p class="feature-card-desc">Making digital organization fun with achievements and progress tracking.</p>
+                    <ul style="color: var(--text-muted); padding-left: 20px; margin-top: 15px;">
+                        <li>Streaks & achievements</li>
+                        <li>Cleanliness score (0-100)</li>
+                        <li>Encouraging messages</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Output Example Section -->
+    <section id="output">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-eyebrow">See It In Action</div>
+                <h2 class="section-title">Example Output</h2>
+                <p class="section-subtitle">Experience the power of CleanCrush with this real-world example</p>
+            </div>
+
+            <div class="output-section">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="terminal-line">$ cleancrush exam end</div>
+                        <div class="terminal-line"><br></div>
+                        <div class="terminal-line">🎓 EXAM PERIOD COMPLETE!</div>
+                        <div class="terminal-line">Found 189 files tracked during exams (4.2 GB).</div>
+                        <div class="terminal-line"><br></div>
+                        <div class="terminal-line">Choose cleanup method:</div>
+                        <div class="terminal-line">[1] QUICK CLEAN (recommended)</div>
+                        <div class="terminal-line">[2] SELECTIVE CLEAN</div>
+                        <div class="terminal-line">[3] SMART CLEAN</div>
+                        <div class="terminal-line"><br></div>
+                        <div class="terminal-line">Proceed with quick clean? [Y/n] y</div>
+                        <div class="terminal-line">✅ Cleaning 189 files...</div>
+                        <div class="terminal-line">✨ Your folder is 72% cleaner than last week!</div>
+                        <div class="terminal-line">🔥 Streak: 5 days in a row!</div>
+                        <div class="terminal-line">🎉 NEW ACHIEVEMENT: 🎓 Exam Reset</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="section-header">
+                    <div class="section-eyebrow">Open Source Project</div>
+                    <h2 class="section-title">Built by students, for students</h2>
+                    <p class="section-subtitle">CleanCrush started as a final-year project at a Dutch university. Frustrated by digital clutter during exam seasons, we built the tool we wished existed. Now it helps thousands of students worldwide.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Open Source</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Telemetry</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Free for students</div>
+                    </div>
+                </div>
+
+                <div class="btn-group" style="justify-content: center;">
+                    <a href="https://github.com/rnveer17/clean_crush" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i> ⭐ Star on GitHub
+                    </a>
+                    <a href="https://github.com/rnveer17/clean_crush/issues" target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-bug"></i> 🐛 Report Issues
+                    </a>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <h3 style="color: var(--accent); margin-bottom: 20px;">Build from Source</h3>
+                    <div style="background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <code style="color: var(--accent); font-family: 'Courier New', monospace; font-size: 1.1rem;">
+                            $ cargo install clean_crush
+                        </code>
+                    </div>
+                    <p style="color: var(--text-muted); margin-top: 15px; font-size: 0.9rem;">
+                        Requires Rust & Cargo. Check the GitHub repository for detailed build instructions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-brand">
+                        <div class="logo">🧹</div>
+                        CleanCrush
+                    </div>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Stop drowning in post-exam digital clutter. Intelligent, privacy-first file management for students.</p>
+                    <a href="https://github.com/rnveer17/clean_crush" target="_blank" class="btn btn-primary" style="display: inline-flex; padding: 10px 20px;">
+                        <i class="fab fa-github"></i> Star on GitHub
+                    </a>
+                </div>
+                
+                <div>
+                    <h4 style="color: var(--text-light); margin-bottom: 20px;">Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="#main-content">Home</a>
+                        <a href="#features">Features</a>
+                        <a href="#output">Example Output</a>
+                        <a href="#about">About</a>
+                        <a href="https://github.com/rnveer17/clean_crush">GitHub</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="color: var(--text-light); margin-bottom: 20px;">Platforms</h4>
+                    <div class="footer-links">
+                        <a href="https://github.com/rnveer17/clean_crush/releases">Linux ARM64</a>
+                        <a href="https://github.com/rnveer17/clean_crush/releases">Windows</a>
+                        <a href="https://github.com/rnveer17/clean_crush/releases">macOS</a>
+                        <a href="https://github.com/rnveer17/clean_crush/releases">Linux x64</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 CleanCrush. MIT License. Made with ❤️ for students everywhere.</p>
+                <p style="margin-top: 10px;">This project is part of a university exam submission.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

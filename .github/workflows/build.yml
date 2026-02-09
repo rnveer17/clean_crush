@@ -1,0 +1,85 @@
+name: Release Statically Linked Rust Binary
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on tags like 'v1.0.0'
+  workflow_dispatch:  # Allow manual triggers
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-musl       # Linux x64 (static)
+          - aarch64-unknown-linux-musl      # ARM Linux (static)
+          - x86_64-pc-windows-msvc          # Windows
+          - x86_64-apple-darwin             # macOS Intel
+          - aarch64-apple-darwin            # macOS ARM (Apple Silicon)
+
+    env:
+      BINARY_NAME: cleancrush  # Changed from 'commr' to 'cleancrush'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Cross (for Linux musl targets)
+        if: matrix.target == 'x86_64-unknown-linux-musl' || matrix.target == 'aarch64-unknown-linux-musl'
+        run: cargo install cross
+
+      - name: Install Target for Cross Compilation
+        run: rustup target add ${{ matrix.target }}
+
+      - name: Build
+        run: |
+          if [[ "${{ matrix.target }}" == *"linux-musl"* ]]; then
+            # Use cross for musl targets
+            cross build --target ${{ matrix.target }} --release
+          else
+            # Use regular cargo for others
+            cargo build --target ${{ matrix.target }} --release
+          fi
+
+      - name: Create Release Archive
+        run: |
+          mkdir -p release
+
+          if [[ "${{ matrix.target }}" == *"windows"* ]]; then
+            cp target/${{ matrix.target }}/release/$BINARY_NAME.exe release/
+            zip -j cleancrush-${{ matrix.target }}.zip release/$BINARY_NAME.exe
+          elif [[ "${{ matrix.target }}" == *"linux-musl"* ]]; then
+            # Clean up target name for filename
+            if [[ "${{ matrix.target }}" == "x86_64-unknown-linux-musl" ]]; then
+              FILENAME="cleancrush-linux-x64"
+            elif [[ "${{ matrix.target }}" == "aarch64-unknown-linux-musl" ]]; then
+              FILENAME="cleancrush-linux-arm64"
+            else
+              FILENAME="cleancrush-${{ matrix.target }}"
+            fi
+            cp target/${{ matrix.target }}/release/$BINARY_NAME release/
+            tar -czvf $FILENAME.tar.gz $BINARY_NAME
+          else
+            # macOS targets
+            if [[ "${{ matrix.target }}" == "x86_64-apple-darwin" ]]; then
+              FILENAME="cleancrush-macos-x64"
+            elif [[ "${{ matrix.target }}" == "aarch64-apple-darwin" ]]; then
+              FILENAME="cleancrush-macos-arm64"
+            else
+              FILENAME="cleancrush-${{ matrix.target }}"
+            fi
+            cp target/${{ matrix.target }}/release/$BINARY_NAME release/
+            tar -czvf $FILENAME.tar.gz $BINARY_NAME
+          fi
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            *.tar.gz
+            *.zip
+          generate_release_notes: true
