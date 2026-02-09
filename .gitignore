@@ -1,0 +1,31 @@
+# Compiled files
+/target/
+**/*.rs.bk
+
+# Executables
+/cleancrush
+/cleancrush.exe
+/cleancrush.pdb
+
+# Config files (user-specific)
+/.cleancrush.json
+/.cleancrush.json.backup
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+/test_data/
+/test_output/
+
+# Build artifacts
+dist/
+*.tar.gz
+*.zip
