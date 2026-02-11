@@ -126,7 +126,7 @@ cleancrush config
 ```
 📄 View Full Command Reference PDF - Complete list of all commands and options
 
-🏗️ Project Structure
+## 🏗️ Project Structure
 ```text
 clean_crush/
 ├── src/
@@ -148,9 +148,9 @@ clean_crush/
 └── LICENSE                 # MIT License
 ```
 
-##🌐 Project Website
+## 🌐 Project Website
 Visit our website for interactive demos, downloads, and documentation:
 
 
-##📄 License
+## 📄 License
 MIT License

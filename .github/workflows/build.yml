@@ -19,7 +19,7 @@ jobs:
           - aarch64-apple-darwin            # macOS ARM (Apple Silicon)
 
     env:
-      BINARY_NAME: cleancrush  # Changed from 'commr' to 'cleancrush'
+      BINARY_NAME: cleancrush
 
     steps:
       - name: Checkout code
