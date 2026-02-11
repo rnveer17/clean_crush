@@ -1,5 +1,5 @@
 [package]
-name = "clean_crush"
+name = "cleancrush"
 version = "0.1.0"
 edition = "2021"
 description = "Student-focused exam file cleanup tool with smart archiving"
@@ -9,7 +9,7 @@ license = "MIT"
 authors = ["Ranveer Kaur Maan <ranveermaan1702@gmail.com>"]
 
 [[bin]]
-name = "clean_crush"
+name = "cleancrush"
 path = "src/main.rs"
 
 [dependencies]
