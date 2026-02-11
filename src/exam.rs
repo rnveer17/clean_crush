@@ -393,7 +393,6 @@ impl ExamManager {
             && self.config.enable_exam_monitoring {
         
             if let Some(tracker) = ExamTracker::show_auto_detection_prompt(recent_study_files, existing_study_files)? {
-                // Clone BEFORE moving into self.tracker
                 let tracker_clone = tracker.clone();
                 self.tracker = Some(tracker);
                 self.config.exam_tracking = Some(tracker_clone.into());
@@ -551,7 +550,6 @@ pub fn load_from_config(&mut self) -> Result<()> {
     if let Some(tracking_state) = &self.config.exam_tracking {
         // FIX: Only load if ACTIVE
         if tracking_state.active {
-            // Convert ExamTrackingState to ExamTracker
             let tracker = ExamTracker {
                 active: tracking_state.active,
                 start_date: tracking_state.start_date.parse().unwrap_or(Utc::now()),

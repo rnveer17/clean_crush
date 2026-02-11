@@ -120,7 +120,7 @@ impl Scanner {
             return Ok(ScanResult::empty());
         }
         
-        // Check if path is protected - ACTUALLY USE ProtectedFolder
+        // Check if path is protected
         if let Some(protected) = self.get_protection_info(path) {
             match protected.protection_type {
                 ProtectionType::Hard => {
@@ -194,7 +194,7 @@ impl Scanner {
                 cloud_files_found += 1;
             }
             
-            // Calculate confidence and reason - PASS hash_groups
+            // Calculate confidence and reason
             let (confidence, reason) = self.calculate_confidence(
                 &path, days_old, size, days_threshold, large_threshold_mb, 
                 &hash_groups, &category, is_duplicate
@@ -448,7 +448,7 @@ impl Scanner {
         }
     }
     
-    /// Calculate confidence score and reason - USE hash_groups parameter
+    /// Calculate confidence score and reason
     fn calculate_confidence(
         &self,
         path: &Path,
@@ -456,7 +456,7 @@ impl Scanner {
         size: u64,
         days_threshold: u64,
         large_threshold_mb: u64,
-        hash_groups: &std::collections::HashMap<String, Vec<PathBuf>>, // USE THIS!
+        hash_groups: &std::collections::HashMap<String, Vec<PathBuf>>,
         category: &FileCategory,
         is_duplicate: bool,
     ) -> (f32, String) {

@@ -62,7 +62,7 @@ pub enum Commands {
     
     /// Manage protected folders
     #[command(subcommand)]
-    Protect(ProtectArgs),  // FIXED: Added variant name
+    Protect(ProtectArgs),
     
     /// Manage archive system
     #[command(subcommand)]
@@ -550,7 +550,7 @@ impl Cli {
                 println!("  cleancrush delete --all --path ~/Downloads");
                 println!("  cleancrush delete --old 90 --path ~/Downloads");
             }
-            // Add more command help as needed...
+            
             Commands::Achievements => {
                 println!("Show achievements and progress");
                 println!();

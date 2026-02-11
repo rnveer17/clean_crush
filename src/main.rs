@@ -183,7 +183,7 @@ fn main() -> Result<()> {
 
 fn handle_scan(
     config: &Config,
-    exam_manager: &mut ExamManager, // Changed to mutable
+    exam_manager: &mut ExamManager,
     args: &cli::ScanArgs,
     safe_mode: bool,
     verbose: bool,
@@ -196,7 +196,7 @@ fn handle_scan(
     
     scanner.print_results(&result, args.detailed);
     
-    // AUTO-DETECTION FOR EXAM MODE (from blueprint)
+    // AUTO-DETECTION FOR EXAM MODE
     if !exam_manager.is_active() && config.enable_exam_monitoring {
         // Calculate recent study files (last 7 days)
         let recent_study_files = result.files.iter()
@@ -636,7 +636,7 @@ fn handle_delete(
         let unlocks = gamification.update_after_cleanup(
             cleanup_result.files_processed,
             cleanup_result.total_size_bytes,
-            CleanupType::Normal,  // USING CleanupType
+            CleanupType::Normal,
             is_exam_cleanup,
         );
         
@@ -716,7 +716,6 @@ fn handle_exam(
             }
         }
         cli::ExamArgs::End => {
-            // USING PostExamChoice
             if let Some(choice) = exam_manager.end_exam()? {
                 // Log which PostExamChoice was selected
                 match &choice {

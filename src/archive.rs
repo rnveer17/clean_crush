@@ -733,11 +733,10 @@ pub fn check_archive_reminders(&self) -> Result<Vec<PathBuf>> {
                 continue;
             }
             
-            // Try to parse date from folder name (YYYY-MM-DD format)
             if let Some(folder_name) = path.file_name() {
                 if let Ok(date) = folder_name.to_string_lossy().parse::<NaiveDate>() {
                     let datetime = date.and_hms_opt(0, 0, 0).unwrap();
-                    // Fix deprecated from_utc
+                    
                     let utc_date = Utc.from_utc_datetime(&datetime);
                     archives.push((path, utc_date));
                 }
