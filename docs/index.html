@@ -199,8 +199,14 @@
             opacity: 0.3;
         }
 
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
         .hero-content {
-            max-width: 600px;
             position: relative;
             z-index: 1;
         }
@@ -256,6 +262,82 @@
             justify-content: center;
             color: var(--accent);
             font-size: 1.2rem;
+        }
+
+        /* Pricing Card in Hero */
+        .hero-pricing {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-pricing:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            transition: var(--transition);
+        }
+
+        .price-tag {
+            display: inline-block;
+            background: rgba(255, 182, 85, 0.15);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-light);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .price-period {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .price-features {
+            list-style: none;
+            padding: 0;
+            margin: 24px 0;
+        }
+
+        .price-features li {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-features i {
+            color: var(--accent);
+            width: 18px;
+        }
+
+        .coming-soon {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .coming-soon span {
+            color: var(--accent);
+            font-weight: 600;
         }
 
         /* Section Styling */
@@ -524,6 +606,11 @@
 
         /* Responsive Design */
         @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
             .hero h1 {
                 font-size: 2.8rem;
             }
@@ -627,56 +714,103 @@
     <!-- Hero Section -->
     <section id="main-content" class="hero">
         <div class="container">
-            <div class="hero-content">
-                <div class="eyebrow">Student-Focused Tool</div>
-                <h1>Stop drowning in post-exam digital clutter.</h1>
-                <p class="hero-subtitle">CleanCrush intelligently tracks your study files during exams and provides safe, privacy-first cleanup options. Built by students, for students.</p>
-                
-                <div class="btn-group">
-                    <a href="#features" class="btn btn-primary">
-                        <i class="fas fa-star"></i> Explore Features
-                    </a>
-                    <a href="#output" class="btn btn-secondary">
-                        <i class="fas fa-terminal"></i> See Example
-                    </a>
+            <div class="hero-grid">
+                <!-- Left Column: Main Content -->
+                <div class="hero-content">
+                    <div class="eyebrow">Student-Focused Tool</div>
+                    <h1>Stop drowning in post-exam digital clutter.</h1>
+                    <p class="hero-subtitle">CleanCrush intelligently tracks your study files during exams and provides safe, privacy-first cleanup options. Built by students, for students.</p>
+                    
+                    <div class="btn-group">
+                        <a href="#features" class="btn btn-primary">
+                            <i class="fas fa-star"></i> Explore Features
+                        </a>
+                        <a href="#output" class="btn btn-secondary">
+                            <i class="fas fa-terminal"></i> See Example
+                        </a>
+                    </div>
+
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <div>
+                                <strong>Privacy First</strong><br>
+                                Never reads your file contents
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <strong>Exam-Aware</strong><br>
+                                Auto-detects study periods
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <div>
+                                <strong>Gamified</strong><br>
+                                Streaks, achievements, scores
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div>
+                                <strong>Safe Cleanup</strong><br>
+                                Recycle Bin first, 30-day restore
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="hero-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-user-shield"></i>
-                        </div>
-                        <div>
-                            <strong>Privacy First</strong><br>
-                            Never reads your file contents
-                        </div>
+                <!-- Right Column: Pricing Card -->
+                <div class="hero-pricing">
+                    <div class="price-tag">
+                        <i class="fas fa-graduation-cap" style="margin-right: 6px;"></i> STUDENT FOREVER
                     </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div>
-                            <strong>Exam-Aware</strong><br>
-                            Auto-detects study periods
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-gamepad"></i>
-                        </div>
-                        <div>
-                            <strong>Gamified</strong><br>
-                            Streaks, achievements, scores
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div>
-                            <strong>Safe Cleanup</strong><br>
-                            Recycle Bin first, 30-day restore
-                        </div>
+                    <div class="price-amount">$0</div>
+                    <div class="price-period">Free forever · No credit card</div>
+                    
+                    <ul class="price-features">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            CleanCrush CLI
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            All core features
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Privacy-first scanning
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Exam-aware detection
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Gamified cleanup
+                        </li>
+                    </ul>
+
+                    <a href="#about" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-download"></i> Get Started
+                    </a>
+
+                    <div class="coming-soon">
+                        <i class="fas fa-rocket" style="color: var(--accent); margin-right: 8px;"></i>
+                        <span>Pro & Campus licensing</span> coming soon<br>
+                        <small style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-top: 8px;">
+                            Cloud sync · Advanced search · IT dashboard · Department reports
+                        </small>
                     </div>
                 </div>
             </div>
@@ -851,8 +985,6 @@ cargo build --release
                         <a href="https://github.com/rnveer17/clean_crush">GitHub</a>
                     </div>
                 </div>
-                
-            
             </div>
 
             <div class="footer-bottom">
