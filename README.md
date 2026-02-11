@@ -11,12 +11,10 @@ CleanCrush is a Rust-based command-line tool that intelligently tracks study fil
 
 ### 🔒 Privacy-First Design
 - **Never reads file contents** - metadata analysis only
-- **Local-only processing** - no cloud, no internet required
 - **Protected folders** - your personal files stay safe
 
 ### 🧹 Intelligent Cleanup
 - **Confidence scoring** (0.0-1.0) for cleanup suggestions
-- **Course detection** (CS, Math, Science, Engineering, etc.)
 - **Duplicate detection** using Blake3 hashing
 - **Old file identification** (>60 days)
 - **Large file identification** (>100 MB)
@@ -27,7 +25,7 @@ CleanCrush is a Rust-based command-line tool that intelligently tracks study fil
 - **Encouraging messages** to keep you motivated
 
 ### 🛡️ Safety First
-- **Recycle Bin/Trash first** - 30-day restore window
+- **Recycle Bin/Trash or Archive first** - 30-day restore window
 - **Dry run mode** - preview changes before applying
 - **Safe mode** - disable all file modifications
 - **Confirmation prompts** - prevent accidental deletions
@@ -109,7 +107,7 @@ cleancrush exam end
 
 # Manage archives (if using Archive mode)
 cleancrush archive list
-cleancrush archive clean --days 30
+cleancrush archive clean 30
 ```
 
 ### Information & Stats
@@ -124,7 +122,6 @@ cleancrush achievements
 # Show configuration (check Archive/Recycle Bin mode)
 cleancrush config
 ```
-📄 View Full Command Reference PDF - Complete list of all commands and options
 
 ## 🏗️ Project Structure
 ```text
@@ -139,9 +136,14 @@ clean_crush/
 │   ├── gamification.rs      # Streaks, achievements, scoring
 │   └── cli.rs               # CLI argument parsing
 ├── docs/
-│   └── index.html          # Project website
+│   └── index.html               # Project website
+│   └── lean_canvas.pdf          # Project Lean Canvas
+│   └── command_reference.pdf    # Full Command Reference
 ├── .github/workflows/
 │   └── build.yml           # CI/CD for cross-compilation
+├── .cargo/
+│   └── config.toml         # Cargo build configuration
+├── rust-toolchain.toml     # Rust version lock
 ├── Cargo.toml              # Rust dependencies & metadata
 ├── .gitignore              # Git ignore rules
 ├── README.md               # This file
@@ -149,7 +151,7 @@ clean_crush/
 ```
 
 ## 🌐 Project Website
-Visit our website for interactive demos, downloads, and documentation:
+https://rnveer17.github.io/clean_crush/
 
 
 ## 📄 License
