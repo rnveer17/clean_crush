@@ -141,8 +141,6 @@ clean_crush/
 │   └── command_reference.pdf    # Full Command Reference
 ├── .github/workflows/
 │   └── build.yml           # CI/CD for cross-compilation
-├── .cargo/
-│   └── config.toml         # Cargo build configuration
 ├── rust-toolchain.toml     # Rust version lock
 ├── Cargo.toml              # Rust dependencies & metadata
 ├── .gitignore              # Git ignore rules
